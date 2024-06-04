@@ -3,7 +3,7 @@ import {useChat} from 'ai/react'
 
 const Chat = () => {
     const {messages, input, handleInputChange, handleSubmit} =useChat({
-        api: openai
+        api: 'api/message'
     })
 
     const chatContainer = useRef(null)
