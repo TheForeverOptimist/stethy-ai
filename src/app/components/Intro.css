@@ -82,6 +82,6 @@
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-40vh); 
+    transform: translateY(-25vh); 
   }
 }

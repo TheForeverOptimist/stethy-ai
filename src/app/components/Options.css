@@ -1,6 +1,17 @@
 .icon-row {
-  opacity: 0;
-  animation: fade-in 1s 7s forwards;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 75px;
+    opacity: 0;
+    animation: fade-in 1s 7s forwards;
+}
+
+
+
+.btn-text{
+    text-align: center;
+    color: white;
 }
 
 @keyframes fade-in {

@@ -1,22 +1,24 @@
 import React from "react";
 import "./Options.css";
 import { NotepadText } from "lucide-react";
+import { MessageSquarePlus } from "lucide-react";
+import Link from "next/link";
+
 
 const Options = () => {
   return (
     <div className="icon-row">
-      <button class="icon-btn">
-        <NotepadText />
-        <span class="btn-text">Button Text</span>
-      </button>
-      <button class="icon-btn">
-        <span class="icon"></span>
-        <span class="btn-text">Button Text</span>
-      </button>
-      <button class="icon-btn">
-        <span class="icon"></span>
-        <span class="btn-text">Button Text</span>
-      </button>
+      <Link href="/Scribe">
+        <NotepadText size={120} color="white" />
+        <h3 class="btn-text">Scribe</h3>
+      </Link>
+      <Link href="/Chat">
+        <MessageSquarePlus
+          size={120}
+          color="white"
+        />
+        <h3 class="btn-text">Health Chat</h3>
+      </Link>
     </div>
   );
 };
