@@ -10,14 +10,14 @@ const Options = () => {
     <div className="icon-row">
       <Link href="/Scribe">
         <NotepadText size={120} color="white" />
-        <h3 class="btn-text">Scribe</h3>
+        <h3 className="btn-text">Scribe</h3>
       </Link>
       <Link href="/Chat">
         <MessageSquarePlus
           size={120}
           color="white"
         />
-        <h3 class="btn-text">Health Chat</h3>
+        <h3 className="btn-text">Health Chat</h3>
       </Link>
     </div>
   );

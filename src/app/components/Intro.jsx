@@ -1,6 +1,6 @@
 import React from 'react'
 import './Intro.css'
-import Options from '@/app/components/Options'
+import Options from "../components/Options"
 
 export default function Intro(){
     return (
