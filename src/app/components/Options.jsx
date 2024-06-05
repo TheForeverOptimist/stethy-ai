@@ -8,11 +8,11 @@ import Link from "next/link";
 const Options = () => {
   return (
     <div className="icon-row">
-      <Link href="/Scribe">
+      {/* <Link href="/scribe">
         <NotepadText size={120} color="white" />
         <h3 className="btn-text">Scribe</h3>
-      </Link>
-      <Link href="/Chat">
+      </Link> */}
+      <Link href="/chat">
         <MessageSquarePlus
           size={120}
           color="white"
