@@ -1,7 +1,7 @@
 
 
 
-export const getResponseFromOpenAI = async () => {
+export const getResponseFromOpenAI = async (messages) => {
     try{
         const response = await fetch('api/message', {
             method: "POST",

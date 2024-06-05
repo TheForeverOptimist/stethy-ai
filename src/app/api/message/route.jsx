@@ -1,20 +1,17 @@
-import {Configuration, OpenAIApi} from "openai"
+import OpenAI from 'openai'
 
 
- const configuration = new Configuration({
+ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
  });
 
- const openai = new OpenAIApi(configuration)
-
-
- export default async function handler(req, res){
+ export async function POST(req, res){
     if(req.method !== 'POST'){
       res.status(405).end()
       return;
     }
 
-    const { messages } = req.body;
+    const { messages } = await req.json();
 
     const systemMessage = {
       role: "system",
@@ -24,7 +21,7 @@ import {Configuration, OpenAIApi} from "openai"
     const completeMessages = [systemMessage, ...messages];
 
     try {
-      const completion = await openai.createChatCompletion({
+      const completion = await openai.chat.completions.create({
         model: "gpt-4",
         messages: completeMessages,
       })
