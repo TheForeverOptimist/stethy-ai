@@ -1,4 +1,5 @@
 import OpenAI from 'openai'
+import {NextResponse} from 'next/server'
 
 
  const openai = new OpenAI({
@@ -26,7 +27,7 @@ import OpenAI from 'openai'
         messages: completeMessages,
       })
 
-      res.status(200).json(completion.data.choices[0].message);
+      return NextResponse.json(completion.choices[0].message)
     }catch(error){
       console.error("Error calling OpenAI API", error);
       res.status(500).json({error: "Error processing request"});
