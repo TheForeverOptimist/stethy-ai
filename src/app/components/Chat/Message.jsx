@@ -2,7 +2,11 @@ import React from 'react'
 
 const Message = ({role, content}) => {
     const isUser = role === 'user';
-    return
+    return (
+        <div className={`message ${isUser ? 'user' : 'ai'}`}>
+            {content}
+        </div>
+    )
 }
 
 export default Message
