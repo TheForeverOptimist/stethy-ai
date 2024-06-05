@@ -7,34 +7,31 @@ import {getResponseFromOpenAI} from '../../../utils/openai'
 export default function ChatBox() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  console.log(messages)
+  const [streamingResponse, setStreamingResponse] = useState('');
 
   const sendMessage = async () => {
     const userMessage = { role: "user", content: input };
     const updatedMessages = [...messages, userMessage]
     setMessages(updatedMessages);
-    console.log(updatedMessages)
 
-    try{
-      const response = await getResponseFromOpenAI(updatedMessages);
-      if(response){
-        setMessages([...updatedMessages, response]);
-      } else{
-        throw new Error("the response from open ai didn't work")
-      }
-    } catch(error){
-      console.error("Error:", error)
-    }
-    setInput("");
+    setStreamingResponse('');
+
+    await getResponseFromOpenAI(updatedMessages, (chunk) => {
+      setStreamingResponse(prev => prev + chunk);
+    })
+
+    setMessages([...updatedMessages, {role: 'assistant', content: streamingResponse}]);
+    setInput('');
   };
-  console.log(input)
-
   return (
     <div className="chat-container">
       <div className="messages">
         {messages.map((msg, index) => (
           <Message key={index} role={msg.role} content={msg.content} />
         ))}
+        {streamingResponse && (
+          <Message role="assistant" content={streamingResponse} />
+        )}
       </div>
       <div className="input-area">
         <input

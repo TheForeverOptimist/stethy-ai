@@ -22,15 +22,36 @@ import {NextResponse} from 'next/server'
     const completeMessages = [systemMessage, ...messages];
 
     try {
-      const completion = await openai.chat.completions.create({
+      const stream = await openai.chat.completions.create({
         model: "gpt-4",
         messages: completeMessages,
-      })
+        stream: true,
+      });
 
-      return NextResponse.json(completion.choices[0].message)
-    }catch(error){
+      return new NextResponse(
+        new ReadableStream({
+          async start(controller){
+            for await (const chunk of stream){
+              const content = chunk.choices[0]?.delta?.content || '';
+              controller.enqueue(new TextEncoder().encode(content));
+            }
+            controller.close()
+          },
+        }),
+        {
+          headers: {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+          }
+        
+        }
+      );
+      }
+  
+    catch(error){
       console.error("Error calling OpenAI API", error);
-      res.status(500).json({error: "Error processing request"});
+      return NextResponse.json({error: 'Error processing request'}, {status: 500});
     }
   
 

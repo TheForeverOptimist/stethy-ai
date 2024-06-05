@@ -79,12 +79,12 @@ body{
 }
 
 .message.user {
-  background-color: #e6f7ff;
+  background-color: #000000;
   text-align: right;
 }
 
 .message.ai {
-  background-color: #f5f5f5;
+  background-color: #000000;
   text-align: left;
 }
 
