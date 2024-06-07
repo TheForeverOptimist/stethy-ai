@@ -50,6 +50,11 @@ body{
   color: var(--foreground);
   background-color: var(--background);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .container {
@@ -57,47 +62,75 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 30px);
   padding: 2rem;
+  overflow: hidden;
 }
 
 .chat-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 30vh;
+  height: 70vh;
   max-width: 600px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 2rem;
+  background-color: blue;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chatbox-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #ffffff;
+  overflow-y: auto;
+}
+
+.messages {
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .message {
   margin: 0.5rem 0;
   padding: 1rem;
   border-radius: 8px;
+  max-width: 90%;
 }
 
 .message.user {
   background-color: #000000;
   text-align: right;
+  align-self: flex-end;
 }
 
 .message.ai {
-  background-color: #000000;
+  background-color: plum;
   text-align: left;
+  align-self: flex-start;
+}
+
+.input-area {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
 }
 
 input[type="text"] {
-  width: 100%;
+  flex-grow: 1;
   padding: 0.5rem;
-  margin-top: 1rem;
+  margin-right: 0.2rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 button {
-  margin-top: 0.5rem;
   padding: 0.5rem 1rem;
   border: none;
   background-color: #0070f3;
