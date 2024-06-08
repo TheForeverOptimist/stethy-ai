@@ -1,58 +1,80 @@
-"use client"
+"use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Message from "./Message";
-import {getResponseFromOpenAI, generateSummaryFromMessages} from '../../../utils/openai'
+import {
+  getResponseFromOpenAI,
+  generateSummaryFromMessages,
+} from "../../../utils/openai";
 
 export default function ChatBox() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [streamingResponse, setStreamingResponse] = useState('');
-  const [summary, setSummary] = useState('')
+  const [streamingResponse, setStreamingResponse] = useState("");
+  const [summary, setSummary] = useState("");
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const sendMessage = async () => {
     const userMessage = { role: "user", content: input };
-    const updatedMessages = [...messages, userMessage]
+    const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
+    setInput("");
 
-    let tempStreamingResponse = '';
+    let tempStreamingResponse = "";
 
     const handleData = (chunk) => {
       tempStreamingResponse += chunk;
-      setStreamingResponse(tempStreamingResponse)
-    }
+      setStreamingResponse(tempStreamingResponse);
+    };
 
-    await getResponseFromOpenAI(updatedMessages, handleData)
+    await getResponseFromOpenAI(updatedMessages, handleData);
 
     setMessages((prevMessages) => [
       ...prevMessages,
-      {role: 'assistant', content: tempStreamingResponse}
-    ])
-    setInput('');
-    setStreamingResponse('')
+      { role: "assistant", content: tempStreamingResponse },
+    ]);
+
+    setStreamingResponse("");
+    scrollToBottom();
   };
 
-const generate = async () => {
-  try {
-    console.log("Sending messages for summary generation:", messages); // Debugging statement
-    const summaryText = await generateSummaryFromMessages(messages);
-    setSummary(summaryText);
-  } catch (error) {
-    console.error("Error generating summary", error);
-  }
-};
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+  };
 
-const download = () => {
-  const element = document.createElement("a");
-  const file = new Blob([summary], {type: 'text/plain'});
-  element.href = URL.createObjectURL(file);
-  element.download = "pre-medical-visit-note.txt";
-  document.body.appendChild(element) //required for firefox
-  element.click()
-}
+  const generate = async () => {
+    try {
+      console.log("Sending messages for summary generation:", messages); // Debugging statement
+      const summaryText = await generateSummaryFromMessages(messages);
+      setSummary(summaryText);
+    } catch (error) {
+      console.error("Error generating summary", error);
+    }
+  };
 
-
-
+  const download = () => {
+    const element = document.createElement("a");
+    const file = new Blob([summary], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = "pre-medical-visit-note.txt";
+    document.body.appendChild(element); //required for firefox
+    element.click();
+  };
 
   return (
     <div className="chatbox-container">
@@ -63,23 +85,25 @@ const download = () => {
         {streamingResponse && (
           <Message role="assistant" content={streamingResponse} />
         )}
+        <div ref={messagesEndRef} />
       </div>
       <div className="input-area">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyPress}
         />
         <button onClick={sendMessage}>Send</button>
       </div>
       <div className="summary">
         <button onClick={generate}>Generate Pre-Medical Visit Note</button>
-        {summary && 
-        <div>
-        <pre>{summary}</pre>
-        <button onClick={download}>Download Note</button>
-        </div>
-        }
+        {summary && (
+          <div>
+            <pre>{summary}</pre>
+            <button onClick={download}>Download Note</button>
+          </div>
+        )}
       </div>
     </div>
   );
