@@ -97,11 +97,15 @@ export default function ChatBox() {
         <button onClick={sendMessage}>Send</button>
       </div>
       <div className="summary">
-        <button onClick={generate}>Generate Pre-Medical Visit Note</button>
+        <button className="postSendButton" onClick={generate}>
+          Generate Pre-Medical Visit Note
+        </button>
         {summary && (
           <div>
             <pre>{summary}</pre>
-            <button onClick={download}>Download Note</button>
+            <button className="postSendButton" onClick={download}>
+              Download Note
+            </button>
           </div>
         )}
       </div>
