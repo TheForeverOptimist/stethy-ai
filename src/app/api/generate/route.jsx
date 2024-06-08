@@ -6,7 +6,7 @@ const openai = new OpenAI({
 })
 
 export async function POST(req, res){
-    const {messages} = req.json();
+    const {messages} = await req.json();
 
     if(!messages || !Array.isArray(messages)){
         return NextResponse.json({error: "Invalid request: 'messages' must be an array"}, {status: 400})
