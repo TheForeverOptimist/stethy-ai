@@ -32,8 +32,8 @@ export default function ChatBox() {
     setStreamingResponse('')
   };
 
-const generateSummary = async () => {
-  const response = await fetch("/api/generateSummary", {
+const generate = async () => {
+  const response = await fetch("/api/generate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -44,6 +44,15 @@ const generateSummary = async () => {
   const data = await response.json();
   setSummary(data.summary);
 };
+
+const download = () => {
+  const element = document.createElement("a");
+  const file = new Blob([summary], {type: 'text/plain'});
+  element.href = URL.createObjectURL(file);
+  element.download = "pre-medical-visit-note.txt";
+  document.body.appendChild(element) //required for firefox
+  element.click()
+}
 
 
 
@@ -67,8 +76,13 @@ const generateSummary = async () => {
         <button onClick={sendMessage}>Send</button>
       </div>
       <div className="summary">
-        <button onClick={generateSummary}>Generate Pre-Medical Visit Note</button>
-        {summary && <pre>{summary}</pre>}
+        <button onClick={generate}>Generate Pre-Medical Visit Note</button>
+        {summary && 
+        <div>
+        <pre>{summary}</pre>
+        <button onClick={download}>Download Note</button>
+        </div>
+        }
       </div>
     </div>
   );

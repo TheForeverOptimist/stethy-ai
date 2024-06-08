@@ -5,14 +5,26 @@ const openai = new OpenAI({
 })
 
 export async function POST(req, res){
+    if(req.method !== 'POST'){
+        return res.status(405).end();
+    }
     const {messages} = req.body;
 
-    const prompt = `Generate a pre-medical visit note based on the following conversation: ${messages.map(msg => `${msg.role}: ${msg.content}`).join('\n')}`;
+    if(!messages || !Array.isArray(messages)){
+        return res.status(400).json({error: "Invalid request: 'messages' must be an array"})
+    }
+
+    const systemMessage = {
+        role: 'system',
+        content: 'You are a healthcare administrative expert. Generate a thorough pre-visit medical note for a physician based on the conversation shared.'
+    }
+
+    const completeMessages = [systemMessage, ...messages]
 
     try{
         const response = await openai.chat.completions.create({
             model: "gpt-4-1106-preview",
-            prompt: prompt,
+            messages: completeMessages,
             max_tokens: 500,
         })
 
