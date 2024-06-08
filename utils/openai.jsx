@@ -32,7 +32,7 @@ export const getResponseFromOpenAI = async (messages, onData) => {
 
 export const generateSummaryFromMessages = async (messages) => {
   try {
-    const response = await fetch("/api/generateSummary", {
+    const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

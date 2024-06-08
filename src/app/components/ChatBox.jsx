@@ -34,6 +34,7 @@ export default function ChatBox() {
 
 const generate = async () => {
   try {
+    console.log("Sending messages for summary generation:", messages); // Debugging statement
     const summaryText = await generateSummaryFromMessages(messages);
     setSummary(summaryText);
   } catch (error) {
