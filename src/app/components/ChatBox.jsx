@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Message from "./Message";
-import {getResponseFromOpenAI} from '../../../utils/openai'
+import {getResponseFromOpenAI, generateSummaryFromMessages} from '../../../utils/openai'
 
 export default function ChatBox() {
   const [messages, setMessages] = useState([]);
@@ -33,16 +33,12 @@ export default function ChatBox() {
   };
 
 const generate = async () => {
-  const response = await fetch("/api/generate", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ messages }),
-  });
-
-  const data = await response.json();
-  setSummary(data.summary);
+  try {
+    const summaryText = await generateSummaryFromMessages(messages);
+    setSummary(summaryText);
+  } catch (error) {
+    console.error("Error generating summary", error);
+  }
 };
 
 const download = () => {
