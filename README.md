@@ -1,36 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Last week, I had an interview for a company I was very excited about and decided I would build a demo that mirrors one of the products in their product line. But I had only found out about the interview less than 24 hours before it was supposed to begin.
 
-## Getting Started
+The company was an all-in-one AI healthcare platform, and the product was a copilot for patients to talk about their issues and it would generate a pre-visit medical note. You can view this demo at https://stethyai.com -- don't mind the UI, I made it in 24 hours.
 
-First, run the development server:
+I was proud of my approach. I did a pre-mortem of what would cause this demo to not succeed and planned with quality and speed in mind. I didn't bloat the application, I used the barebone necessities to build it out (React/Next.js/OpenAI/JavaScript) and with a little less than 8 hours of development time I was able to execute my objectives.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This application utilized multiple asynchronous methodologies including splitting, embedding and chat generation models and generates a downloadable pre-visit medical note for a physician to review.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+If I had to improve upon this application there are 4 key things I would focus on:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Type Safety, Modernizing the User Interface, Adding Voice with Speech to Text Transcription, Adding user authentication and storage to improve the overall retention and experience of the individual user where they can review their previous engagements.
