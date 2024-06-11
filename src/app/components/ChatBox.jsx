@@ -90,7 +90,7 @@ export default function ChatBox() {
       <div className="input-area">
         <input
           type="text"
-          placeholder="Tell us what's wrong here.."
+          placeholder="Tell us what's wrong here..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyPress}
