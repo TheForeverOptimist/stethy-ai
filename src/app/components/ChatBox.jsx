@@ -76,6 +76,10 @@ export default function ChatBox() {
     element.click();
   };
 
+  const canGenerateReport =
+    messages.some((msg) => msg.role === "user") &&
+    messages.some((msg) => msg.role === "assistant");
+
   return (
     <div className="chatbox-container">
       <div className="messages">
@@ -98,7 +102,7 @@ export default function ChatBox() {
         <button onClick={sendMessage}>Send</button>
       </div>
       <div className="summary">
-        <button className="postSendButton" onClick={generate}>
+        <button className="postSendButton" onClick={generate} disabled={!canGenerateReport}>
           Generate Pre-Medical Visit Note
         </button>
         {summary && (

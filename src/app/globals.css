@@ -151,4 +151,20 @@ button:hover {
 
 .postSendButton{
   margin: 0.5rem 9rem;
+  transition: all 0.3s ease;
+}
+
+.postSendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.postSendButton:disabled:hover {
+  background-color: #cccccc;
+}
+
+.postSendButton:hover:not(:disabled) {
+  background-color: #0056b3;
 }
